@@ -1,0 +1,9 @@
+openai-whisper
+pydub
+requests
+iso8601
+reportlab
+torch
+tqdm
+flask
+audioop-lts

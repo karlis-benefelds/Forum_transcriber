@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Transcriber</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #f5f5f5;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            min-height: 100vh;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px 0;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .header h1 {
+            color: #333;
+            font-size: 2.5rem;
+            font-weight: 300;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+        
+        .form-section {
+            background-color: #fafafa;
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 1rem;
+        }
+        
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .file-input-button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 1rem;
+            transition: background-color 0.2s;
+        }
+        
+        .file-input-button:hover {
+            background-color: #0056b3;
+        }
+        
+        .file-name {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: #495057;
+        }
+        
+        .curl-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            font-family: 'Courier New', monospace;
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .privacy-select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            background-color: white;
+        }
+        
+        .submit-button {
+            width: 100%;
+            padding: 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+        
+        .submit-button:hover {
+            background-color: #218838;
+        }
+        
+        .submit-button:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+        
+        .progress-section {
+            display: none;
+            background-color: #fff3cd;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ffeaa7;
+            margin-top: 20px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: #007bff;
+            width: 0%;
+            transition: width 0.3s ease;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+        
+        .status-text {
+            text-align: center;
+            font-weight: 600;
+            color: #856404;
+        }
+        
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #f5c6cb;
+            margin-top: 15px;
+        }
+        
+        .help-text {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><strong>Forum Class Transcriber</strong></h1>
+            <p>Upload your MP4 session video and get automated transcripts in multiple formats</p>
+        </div>
+        
+        <form id="uploadForm" class="form-section">
+            <div class="form-group">
+                <label for="video_file">Select MP4 Video File</label>
+                <div class="file-input-wrapper">
+                    <input type="file" id="video_file" name="video_file" class="file-input" accept=".mp4">
+                    <button type="button" class="file-input-button" onclick="document.getElementById('video_file').click()">
+                        Choose MP4 File
+                    </button>
+                </div>
+                <div id="fileName" class="file-name" style="display: none;"></div>
+                <div class="help-text">Maximum file size: 500MB</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="curl_string">Forum CURL String</label>
+                <textarea id="curl_string" name="curl_string" class="curl-input" 
+                         placeholder="Paste your Forum cURL command here...&#10;Example: curl 'https://forum.example.com/api/...' -H 'Authorization: Bearer ...'"></textarea>
+                <div class="help-text"><p>Copy the complete cURL command from your browser's network tab when accessing forum</p>
+                    <p>(look for the "self" request in the Name column)</p></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="privacy_mode">Privacy Mode</label>
+                <select id="privacy_mode" name="privacy_mode" class="privacy-select">
+                    <option value="names">Show student names</option>
+                    <option value="ids">Show student IDs only</option>
+                    <option value="both">Generate both versions</option>
+                </select>
+                <div class="help-text">Choose how student information appears in the transcript</div>
+            </div>
+            
+            <button type="submit" class="submit-button" id="submitBtn">
+                Generate Transcript
+            </button>
+            
+            <div id="errorMessage" class="error-message" style="display: none;"></div>
+        </form>
+        
+        <div id="progressSection" class="progress-section">
+            <h3>Processing Your Video...</h3>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+            <div id="statusText" class="status-text">Preparing to process...</div>
+            <div id="elapsedTime" style="text-align: center; margin-top: 10px; font-size: 0.9rem; color: #6c757d;"></div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>Note:</strong> Processing time depends on video length. Longer videos may take 10-30 minutes.</p>
+            <p><strong>⚠️ Accuracy caution:</strong> Do not rely solely on this transcript. Manually verify key information.</p>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('uploadForm');
+        const fileInput = document.getElementById('video_file');
+        const fileName = document.getElementById('fileName');
+        const submitBtn = document.getElementById('submitBtn');
+        const errorMessage = document.getElementById('errorMessage');
+        const progressSection = document.getElementById('progressSection');
+        const statusText = document.getElementById('statusText');
+        const elapsedTime = document.getElementById('elapsedTime');
+        
+        let pollInterval;
+        
+        // Handle file selection
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                fileName.textContent = `Selected: ${file.name} (${(file.size / 1024 / 1024).toFixed(1)} MB)`;
+                fileName.style.display = 'block';
+            } else {
+                fileName.style.display = 'none';
+            }
+        });
+        
+        // Handle form submission
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(form);
+            const file = fileInput.files[0];
+            const curlString = document.getElementById('curl_string').value.trim();
+            
+            // Validation
+            if (!file) {
+                showError('Please select an MP4 file');
+                return;
+            }
+            
+            if (!file.name.toLowerCase().endsWith('.mp4')) {
+                showError('Please select an MP4 file');
+                return;
+            }
+            
+            if (!curlString) {
+                showError('Please provide the Forum cURL string');
+                return;
+            }
+            
+            hideError();
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Uploading...';
+            
+            // Upload file
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                
+                // Start polling for status
+                startStatusPolling(data.job_id);
+                
+            })
+            .catch(error => {
+                showError(error.message);
+                resetForm();
+            });
+        });
+        
+        function startStatusPolling(jobId) {
+            progressSection.style.display = 'block';
+            form.style.display = 'none';
+            
+            // Show processing message and redirect to results when complete
+            statusText.textContent = 'Processing your video... This may take several minutes depending on video length.';
+            
+            // Simple redirect to results page after a delay
+            setTimeout(() => {
+                window.location.href = `/results/${jobId}`;
+            }, 5000);
+        }
+        
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+        }
+        
+        function hideError() {
+            errorMessage.style.display = 'none';
+        }
+        
+        function resetForm() {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Generate Transcript';
+            progressSection.style.display = 'none';
+            form.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

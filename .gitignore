@@ -1,0 +1,53 @@
+# Standard Python .gitignore file
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyd
+*.pyo
+
+# Distributions and packaging
+.Python
+build/
+dist/
+wheels/
+*.egg-info/
+
+# Environments
+.env
+.venv
+venv/
+env/
+
+# IDEs and editors
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# macOS specific files
+.DS_Store
+
+# Jupyter Notebook specific files
+.ipynb_checkpoints
+
+# Logs
+*.log
+
+# Temporary files and data
+*.tmp
+*.bak
+*.swp
+*.swo
+*.zip
+
+# Generated reports/transcripts (if applicable)
+/content/
+uploads/
+outputs/
+transcriber/
+*.mp4
+*.pdf
+*.csv
+*.json # For intermediate transcript JSONs
+*.wav # For processed audio files

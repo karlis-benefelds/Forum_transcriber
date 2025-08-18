@@ -1,0 +1,84 @@
+# Class Transcriber Configuration File
+
+# Audio Processing Settings
+audio:
+  # Whisper model size: tiny, base, small, medium, large
+  whisper_model: "base"
+  
+  # Segment length for processing (in seconds)
+  segment_length: 14400
+  
+  # Sample rate for audio conversion
+  sample_rate: 16000
+  
+  # Audio channels (1 for mono, 2 for stereo)
+  channels: 1
+
+# Output Settings
+output:
+  # Default output directory (relative to project root)
+  directory: "./output"
+  
+  # File naming conventions
+  naming:
+    pdf: "session_{class_id}_transcript_{privacy_mode}.pdf"
+    csv: "session_{class_id}_transcript_{privacy_mode}.csv"
+    json: "session_{class_id}_transcript.json"
+    events: "session_{class_id}_events.json"
+
+# Privacy Settings
+privacy:
+  # Default privacy mode: names, ids, both
+  default_mode: "names"
+  
+  # Whether to include attendance in reports
+  include_attendance: true
+  
+  # Whether to include timeline events
+  include_timeline: true
+
+# Processing Settings
+processing:
+  # Use GPU acceleration if available
+  use_cuda: true
+  
+  # Enable mixed precision for faster processing
+  use_fp16: true
+  
+  # Cleanup temporary files after processing
+  cleanup_temp_files: true
+
+# Report Generation
+reports:
+  # PDF settings
+  pdf:
+    page_size: "letter"
+    margins:
+      top: 60
+      bottom: 60
+      left: 60
+      right: 60
+    
+    # Font settings
+    fonts:
+      title: "Helvetica-Bold"
+      header: "Helvetica-Bold" 
+      body: "Helvetica"
+    
+    # Colors (hex format)
+    colors:
+      header_bg: "#808080"
+      header_text: "#F5F5DC"
+      table_border: "#000000"
+  
+  # CSV settings
+  csv:
+    delimiter: ","
+    quoting: "minimal"
+    encoding: "utf-8"
+
+# Logging
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "class_transcriber.log"

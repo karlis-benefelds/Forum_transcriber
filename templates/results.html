@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transcript Results - Class Transcriber</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #f5f5f5;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            min-height: 100vh;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px 0;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .header h1 {
+            color: #28a745;
+            font-size: 2.2rem;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        .success-icon {
+            font-size: 4rem;
+            color: #28a745;
+            margin-bottom: 20px;
+        }
+        
+        .results-section {
+            background-color: #d4edda;
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid #c3e6cb;
+            margin-bottom: 30px;
+        }
+        
+        .file-info {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 25px;
+        }
+        
+        .file-info h3 {
+            color: #495057;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .file-info p {
+            color: #6c757d;
+            margin: 5px 0;
+        }
+        
+        .download-section {
+            margin-top: 25px;
+        }
+        
+        .download-section h3 {
+            color: #495057;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        
+        .privacy-mode-group {
+            background-color: white;
+            padding: 20px;
+            border-radius: 6px;
+            border: 1px solid #dee2e6;
+            margin-bottom: 20px;
+        }
+        
+        .privacy-mode-title {
+            color: #343a40;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .download-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .pdf-btn {
+            background-color: #dc3545;
+            color: white;
+        }
+        
+        .pdf-btn:hover {
+            background-color: #c82333;
+        }
+        
+        .csv-btn {
+            background-color: #17a2b8;
+            color: white;
+        }
+        
+        .csv-btn:hover {
+            background-color: #138496;
+        }
+        
+        .json-btn {
+            background-color: #6f42c1;
+            color: white;
+        }
+        
+        .json-btn:hover {
+            background-color: #5a32a3;
+        }
+        
+        .download-icon {
+            margin-right: 8px;
+            font-size: 1.1rem;
+        }
+        
+        .actions-section {
+            background-color: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+            margin-top: 30px;
+        }
+        
+        .actions-section h3 {
+            color: #495057;
+            margin-bottom: 20px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .action-btn {
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: background-color 0.2s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .primary-btn {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        .primary-btn:hover {
+            background-color: #0056b3;
+        }
+        
+        .secondary-btn {
+            background-color: #6c757d;
+            color: white;
+        }
+        
+        .secondary-btn:hover {
+            background-color: #545b62;
+        }
+        
+        .warning-section {
+            background-color: #fff3cd;
+            padding: 20px;
+            border-radius: 6px;
+            border: 1px solid #ffeaa7;
+            margin-top: 30px;
+        }
+        
+        .warning-section h4 {
+            color: #856404;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .warning-section p {
+            color: #856404;
+            margin-bottom: 8px;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 50px;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #007bff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 600px) {
+            .download-buttons {
+                flex-direction: column;
+            }
+            
+            .download-btn {
+                text-align: center;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><strong>Transcript Ready!</strong></h1>
+            <p>Your video has been successfully processed</p>
+        </div>
+        
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>Loading results...</p>
+        </div>
+        
+        <div id="results-content" style="display: none;">
+            <div class="results-section">
+                <div class="file-info" id="fileInfo">
+                    <!-- File information will be populated by JavaScript -->
+                </div>
+                
+                <div class="download-section">
+                    <h3>Download Transcripts</h3>
+                    <div id="downloadLinks">
+                        <!-- Download links will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="actions-section">
+                <h3>What's Next?</h3>
+                <div class="action-buttons">
+                    <a href="/" class="action-btn primary-btn">Process Another Video</a>
+                    <button onclick="window.print()" class="action-btn secondary-btn">Print This Page</button>
+                </div>
+            </div>
+            
+            <div class="warning-section">
+                <h4>⚠️ Important Accuracy Notice</h4>
+                <p><strong>Do not rely solely on this automated transcript.</strong> AI transcription may contain errors, especially with:</p>
+                <p>• Technical terms, names, and specialized vocabulary</p>
+                <p>• Audio with background noise or multiple speakers</p>
+                <p>• Accented speech or unclear pronunciation</p>
+                <p><strong>Always manually verify key information before using for official purposes.</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Extract job ID from URL
+        const jobId = window.location.pathname.split('/').pop();
+        
+        // Load results when page loads
+        window.addEventListener('load', function() {
+            loadResults();
+        });
+        
+        function loadResults() {
+            fetch(`/status/${jobId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'completed') {
+                        displayResults(data);
+                    } else if (data.status === 'error') {
+                        displayError(data.error || 'An error occurred');
+                    } else {
+                        // Still processing, redirect back to main page
+                        window.location.href = '/';
+                    }
+                })
+                .catch(error => {
+                    displayError('Error loading results: ' + error.message);
+                });
+        }
+        
+        function displayResults(data) {
+            const loading = document.getElementById('loading');
+            const resultsContent = document.getElementById('results-content');
+            const fileInfo = document.getElementById('fileInfo');
+            const downloadLinks = document.getElementById('downloadLinks');
+            
+            loading.style.display = 'none';
+            resultsContent.style.display = 'block';
+            
+            // Display file information
+            const processingTime = data.end_time && data.start_time ? 
+                calculateDuration(data.start_time, data.end_time) : 'Unknown';
+                
+            fileInfo.innerHTML = `
+                <h3>Processing Details</h3>
+                <p><strong>Original file:</strong> ${data.filename}</p>
+                <p><strong>Processing time:</strong> ${processingTime}</p>
+                <p><strong>Completed:</strong> ${new Date(data.end_time).toLocaleString()}</p>
+            `;
+            
+            // Display download links
+            if (data.outputs && data.outputs.length > 0) {
+                let downloadHtml = '';
+                
+                data.outputs.forEach(([privacyMode, pdfPath, csvPath]) => {
+                    const modeTitle = privacyMode === 'names' ? 'Student Names Version' : 'Student IDs Version';
+                    
+                    downloadHtml += `
+                        <div class="privacy-mode-group">
+                            <div class="privacy-mode-title">${modeTitle}</div>
+                            <div class="download-buttons">
+                                <a href="/download/${jobId}/pdf/${privacyMode}" class="download-btn pdf-btn">
+                                    PDF Transcript
+                                </a>
+                                <a href="/download/${jobId}/csv/${privacyMode}" class="download-btn csv-btn">
+                                    CSV Data
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                downloadLinks.innerHTML = downloadHtml;
+            } else {
+                downloadLinks.innerHTML = '<p>No output files were generated.</p>';
+            }
+        }
+        
+        function displayError(errorMessage) {
+            const loading = document.getElementById('loading');
+            const resultsContent = document.getElementById('results-content');
+            
+            loading.style.display = 'none';
+            resultsContent.innerHTML = `
+                <div class="results-section" style="background-color: #f8d7da; border-color: #f5c6cb;">
+                    <h3 style="color: #721c24;">❌ Processing Failed</h3>
+                    <p style="color: #721c24; margin-top: 15px;"><strong>Error:</strong> ${errorMessage}</p>
+                    <div style="margin-top: 25px;">
+                        <a href="/" class="action-btn primary-btn">Try Again</a>
+                    </div>
+                </div>
+            `;
+            resultsContent.style.display = 'block';
+        }
+        
+        function calculateDuration(startTime, endTime) {
+            const start = new Date(startTime);
+            const end = new Date(endTime);
+            const diffMs = end - start;
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffSecs = Math.floor((diffMs % 60000) / 1000);
+            return `${diffMins}m ${diffSecs}s`;
+        }
+    </script>
+</body>
+</html>
