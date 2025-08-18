@@ -13,10 +13,11 @@ from src.audio_preprocessor import AudioPreprocessor
 from src.transcription_processor import TranscriptionProcessor
 from src.forum_data_fetcher import get_forum_events
 from src.report_generator import compile_transcript_to_pdf, compile_transcript_to_csv
+from src.performance_monitor import PerformanceMonitor
 # Note: create_simplified_csv and create_simplified_transcript are not directly used in the main process_lecture pipeline
 # but are kept in report_generator.py if needed for fallback scenarios not handled by this main function.
 
-def process_lecture(audio_path, class_id, curl_string, privacy_mode="names", user_terms=None):
+def process_lecture(audio_path, class_id, curl_string, privacy_mode="names", user_terms=None, performance_mode="balanced"):
     """
     Main pipeline to process lecture audio, fetch forum data, transcribe, and generate reports.
     Args:
@@ -25,9 +26,12 @@ def process_lecture(audio_path, class_id, curl_string, privacy_mode="names", use
         curl_string (str): The cURL string for Forum API authentication.
         privacy_mode (str): 'names', 'ids', or 'both' for report generation.
         user_terms (list): List of custom terms to preserve spellings (currently unused).
+        performance_mode (str): 'fast', 'balanced', or 'accurate' processing mode.
     Returns:
         list: A list of tuples, each containing (privacy_mode, pdf_path, csv_path).
     """
+    monitor = PerformanceMonitor()
+    
     try:
         print("Step 1/4: Fetching Forum class events...")
         headers = clean_curl(curl_string)
@@ -36,10 +40,35 @@ def process_lecture(audio_path, class_id, curl_string, privacy_mode="names", use
         print("\nStep 2/4: Preprocessing audio...")
         preprocessor = AudioPreprocessor()
         fixed_path = preprocessor.validate_and_fix_file(audio_path)
+        
+        # Get audio duration for performance monitoring
+        from pydub import AudioSegment
+        audio = AudioSegment.from_file(fixed_path)
+        audio_duration = len(audio) / 1000
+        
+        # Determine optimal settings based on performance mode and duration
+        model_size, segment_length, max_workers = _get_optimal_settings(
+            audio_duration, performance_mode
+        )
 
-        print("\nStep 3/4: Transcribing...")
-        tp = TranscriptionProcessor()
-        transcript_path = tp.transcribe(fixed_path, class_id)
+        print(f"\nStep 3/4: Transcribing (Mode: {performance_mode})...")
+        print(f"Settings: model={model_size}, segment_length={segment_length}s, workers={max_workers}")
+        
+        # Start performance monitoring
+        monitor.start_monitoring({
+            'audio_duration': audio_duration,
+            'model_size': model_size,
+            'device': 'auto',  # Will be determined by TranscriptionProcessor
+            'total_segments': max(1, int(audio_duration // segment_length))
+        })
+        
+        tp = TranscriptionProcessor(
+            model_size=model_size,
+            segment_length=segment_length,
+            max_workers=max_workers
+        )
+        
+        transcript_path = tp.transcribe(fixed_path, class_id, parallel=True)
 
         print("\nStep 4/4: Preparing outputs...")
 
@@ -82,9 +111,22 @@ def process_lecture(audio_path, class_id, curl_string, privacy_mode="names", use
         except Exception as cleanup_error:
             print(f"Note: Could not clean up temporary files: {str(cleanup_error)}")
 
+        # Stop monitoring and get performance summary
+        performance_summary = monitor.stop_monitoring()
+        if performance_summary:
+            print(f"\n📊 Performance Summary:")
+            print(f"  Processing time: {performance_summary['total_processing_time']:.1f}s")
+            if performance_summary.get('real_time_factor'):
+                print(f"  Speed: {performance_summary['real_time_factor']:.1f}x real-time")
+            print(f"  Peak CPU: {performance_summary['peak_cpu_percent']:.1f}%")
+            print(f"  Peak Memory: {performance_summary['peak_memory_percent']:.1f}%")
+            if performance_summary['peak_gpu_memory_gb'] > 0:
+                print(f"  Peak GPU Memory: {performance_summary['peak_gpu_memory_gb']:.1f}GB")
+
         return outputs
 
     except Exception as e:
+        monitor.stop_monitoring()
         print(f"\nERROR: {str(e)}")
         if "MP4" in str(e) and audio_path.lower().endswith('.mp4'):
             print("\nThere was a problem with your MP4 file. Suggestions:")
@@ -94,6 +136,66 @@ def process_lecture(audio_path, class_id, curl_string, privacy_mode="names", use
         else:
             print("\nTranscription failed. Please try again with a different file or path.")
         return []
+
+def _get_optimal_settings(audio_duration_seconds: float, performance_mode: str = "balanced"):
+    """
+    Determine optimal transcription settings based on audio duration and performance mode.
+    
+    Args:
+        audio_duration_seconds: Duration of audio in seconds
+        performance_mode: 'fast', 'balanced', or 'accurate'
+    
+    Returns:
+        tuple: (model_size, segment_length, max_workers)
+    """
+    duration_minutes = audio_duration_seconds / 60
+    
+    # Import to check available devices
+    try:
+        import torch
+        has_gpu = torch.cuda.is_available() or (hasattr(torch.backends, 'mps') and torch.backends.mps.is_available())
+    except ImportError:
+        has_gpu = False
+    
+    if performance_mode == "fast":
+        if duration_minutes > 90:
+            model_size = "base"
+            segment_length = 1800  # 30 minutes
+            max_workers = 4 if has_gpu else 2
+        elif duration_minutes > 30:
+            model_size = "small"
+            segment_length = 3600  # 1 hour
+            max_workers = 3 if has_gpu else 2
+        else:
+            model_size = "small"
+            segment_length = 7200  # 2 hours
+            max_workers = 2
+    
+    elif performance_mode == "accurate":
+        if has_gpu:
+            model_size = "large" if duration_minutes < 120 else "medium"
+            segment_length = 3600  # 1 hour
+            max_workers = 2
+        else:
+            model_size = "medium"
+            segment_length = 7200  # 2 hours  
+            max_workers = 1
+    
+    else:  # balanced
+        if duration_minutes > 120:
+            model_size = "small" if not has_gpu else "medium"
+            segment_length = 1800  # 30 minutes
+            max_workers = 4 if has_gpu else 2
+        elif duration_minutes > 60:
+            model_size = "medium" if has_gpu else "small"
+            segment_length = 3600  # 1 hour
+            max_workers = 3 if has_gpu else 2
+        else:
+            model_size = "medium"
+            segment_length = 7200  # 2 hours
+            max_workers = 2
+    
+    return model_size, segment_length, max_workers
 
 if __name__ == "__main__":
     # Command-line argument parsing instead of input() for a cleaner app structure

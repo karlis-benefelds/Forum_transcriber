@@ -35,6 +35,7 @@ def upload_file():
     file = request.files['video_file']
     curl_string = request.form.get('curl_string', '').strip()
     privacy_mode = request.form.get('privacy_mode', 'names')
+    performance_mode = request.form.get('performance_mode', 'balanced')
     
     if file.filename == '':
         return jsonify({'error': 'No file selected'}), 400
@@ -66,13 +67,13 @@ def upload_file():
     # Start processing in background
     thread = threading.Thread(
         target=process_video_background,
-        args=(job_id, filepath, curl_string, privacy_mode)
+        args=(job_id, filepath, curl_string, privacy_mode, performance_mode)
     )
     thread.start()
     
     return jsonify({'job_id': job_id, 'message': 'Upload successful, processing started'})
 
-def process_video_background(job_id, filepath, curl_string, privacy_mode):
+def process_video_background(job_id, filepath, curl_string, privacy_mode, performance_mode="balanced"):
     try:
         processing_status[job_id]['status'] = 'processing'
         processing_status[job_id]['step'] = 'Processing video...'
@@ -89,7 +90,7 @@ def process_video_background(job_id, filepath, curl_string, privacy_mode):
             raise Exception('Could not extract class ID from CURL string')
         
         # Process the lecture
-        outputs = process_lecture(filepath, class_id, curl_string, privacy_mode)
+        outputs = process_lecture(filepath, class_id, curl_string, privacy_mode, None, performance_mode)
         
         processing_status[job_id]['status'] = 'completed'
         processing_status[job_id]['step'] = 'Processing complete!'

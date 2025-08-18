@@ -243,6 +243,20 @@
                 <div class="help-text">Choose how student information appears in the transcript</div>
             </div>
             
+            <div class="form-group">
+                <label for="performance_mode">Processing Mode</label>
+                <select id="performance_mode" name="performance_mode" class="privacy-select">
+                    <option value="balanced" selected>Balanced (Recommended)</option>
+                    <option value="fast">Fast (Lower accuracy)</option>
+                    <option value="accurate">Accurate (Slower)</option>
+                </select>
+                <div class="help-text">
+                    <strong>Fast:</strong> ~2-5x faster, good for drafts<br>
+                    <strong>Balanced:</strong> Optimal speed/accuracy ratio<br>
+                    <strong>Accurate:</strong> Best quality, slower processing
+                </div>
+            </div>
+            
             <button type="submit" class="submit-button" id="submitBtn">
                 Generate Transcript
             </button>
