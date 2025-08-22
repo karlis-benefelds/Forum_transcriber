@@ -1,0 +1,19 @@
+{
+  "name": "class-transcriber",
+  "version": "2.3.0",
+  "description": "Class Transcriber with Web UI for processing lecture videos",
+  "main": "app.py",
+  "scripts": {
+    "start": "python app.py",
+    "dev": "python app.py",
+    "test": "python -m pytest tests/"
+  },
+  "keywords": [
+    "transcription",
+    "lecture",
+    "whisper",
+    "flask"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+}

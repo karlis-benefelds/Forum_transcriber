@@ -13,54 +13,249 @@
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background-color: #f5f5f5;
+            background-color: #f8f9fa;
             line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
         }
         
+        .header-bar {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2d4a6b 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .header-content h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0;
+            color: white;
+        }
+        
+        .main-layout {
+            display: flex;
+            flex: 1;
+            height: calc(100vh - 80px);
+        }
+
+        .sidebar {
+            width: 280px;
+            background-color: white;
+            border-right: 1px solid #dee2e6;
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+
+        .sidebar h3 {
+            color: #1e3a5f;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .nav-section {
+            margin-bottom: 2rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #495057;
+            text-decoration: none;
+            border: 1px solid transparent;
+        }
+
+        .nav-item:hover {
+            background-color: #f8f9fa;
+            color: #1e3a5f;
+            border-color: #e9ecef;
+        }
+
+        .nav-item.active {
+            background-color: #1e3a5f;
+            color: white;
+            border-color: #1e3a5f;
+        }
+
+        .nav-item i {
+            width: 20px;
+            margin-right: 0.75rem;
+            font-size: 1rem;
+        }
+
+        .nav-item span {
+            font-weight: 500;
+        }
+
+        .content-area {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+            background-color: #f8f9fa;
+        }
+
+        .view-section {
+            display: none;
+        }
+
+        .view-section.active {
+            display: block;
+        }
+
         .container {
             max-width: 800px;
             margin: 0 auto;
-            padding: 20px;
+        }
+
+        .transcript-list {
             background-color: white;
-            min-height: 100vh;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            overflow: hidden;
         }
-        
-        .header {
+
+        .transcript-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e9ecef;
+            transition: background-color 0.2s ease;
+        }
+
+        .transcript-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .transcript-item:last-child {
+            border-bottom: none;
+        }
+
+        .transcript-info h4 {
+            margin: 0 0 0.25rem 0;
+            color: #1e3a5f;
+            font-size: 1rem;
+        }
+
+        .transcript-info p {
+            margin: 0;
+            color: #6c757d;
+            font-size: 0.85rem;
+        }
+
+        .transcript-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: #1e3a5f;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #2d4a6b;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #545b62;
+        }
+
+        .empty-state {
             text-align: center;
-            margin-bottom: 40px;
-            padding: 20px 0;
-            border-bottom: 2px solid #e0e0e0;
+            padding: 3rem 2rem;
+            color: #6c757d;
+        }
+
+        .empty-state h4 {
+            color: #495057;
+            margin-bottom: 0.5rem;
         }
         
-        .header h1 {
-            color: #333;
-            font-size: 2.5rem;
-            font-weight: 300;
+        .main-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 2rem;
+            margin-bottom: 1.5rem;
         }
         
-        .header p {
-            color: #666;
-            font-size: 1.1rem;
-            margin-top: 10px;
+        .card-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .card-header h2 {
+            color: #1e3a5f;
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .card-header p {
+            color: #6c757d;
+            font-size: 1rem;
+            margin: 0;
         }
         
         .form-section {
-            background-color: #fafafa;
-            padding: 30px;
-            border-radius: 8px;
-            border: 1px solid #e0e0e0;
+            background-color: white;
+            border-radius: 0;
+            border: none;
+            padding: 0;
         }
         
         .form-group {
-            margin-bottom: 25px;
+            margin-bottom: 1.5rem;
         }
         
         .form-group label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 0.5rem;
             font-weight: 600;
-            color: #333;
-            font-size: 1rem;
+            color: #1e3a5f;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
         
         .file-input-wrapper {
@@ -76,79 +271,111 @@
         .file-input-button {
             display: block;
             width: 100%;
-            padding: 15px;
-            background-color: #007bff;
+            padding: 12px 20px;
+            background-color: #1e3a5f;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
             text-align: center;
-            font-size: 1rem;
-            transition: background-color 0.2s;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
         
         .file-input-button:hover {
-            background-color: #0056b3;
+            background-color: #2d4a6b;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(30, 58, 95, 0.3);
         }
         
         .file-name {
-            margin-top: 10px;
-            padding: 10px;
-            background-color: #e9ecef;
-            border-radius: 4px;
-            font-size: 0.9rem;
+            margin-top: 0.75rem;
+            padding: 0.75rem 1rem;
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            font-size: 0.85rem;
             color: #495057;
+            border-left: 3px solid #fd7e14;
         }
         
         .curl-input {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 0.9rem;
-            font-family: 'Courier New', monospace;
+            padding: 12px 16px;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
             resize: vertical;
             min-height: 100px;
+            background-color: #f8f9fa;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .curl-input:focus {
+            border-color: #1e3a5f;
+            box-shadow: 0 0 0 2px rgba(30, 58, 95, 0.1);
+            outline: none;
+            background-color: white;
         }
         
         .privacy-select {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 1rem;
+            padding: 12px 16px;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            font-size: 0.9rem;
             background-color: white;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .privacy-select:focus {
+            border-color: #1e3a5f;
+            box-shadow: 0 0 0 2px rgba(30, 58, 95, 0.1);
+            outline: none;
         }
         
         .submit-button {
             width: 100%;
-            padding: 15px;
-            background-color: #28a745;
+            padding: 16px 24px;
+            background: linear-gradient(135deg, #fd7e14 0%, #e8690b 100%);
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 600;
-            transition: background-color 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(253, 126, 20, 0.2);
         }
         
         .submit-button:hover {
-            background-color: #218838;
+            background: linear-gradient(135deg, #e8690b 0%, #d35400 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(253, 126, 20, 0.3);
         }
         
         .submit-button:disabled {
-            background-color: #6c757d;
+            background: #adb5bd;
             cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
         }
         
         .progress-section {
             display: none;
-            background-color: #fff3cd;
-            padding: 20px;
+            background-color: white;
+            padding: 2rem;
             border-radius: 8px;
-            border: 1px solid #ffeaa7;
-            margin-top: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-top: 1.5rem;
+            border-left: 4px solid #fd7e14;
         }
         
         .progress-bar {
@@ -162,10 +389,11 @@
         
         .progress-fill {
             height: 100%;
-            background-color: #007bff;
+            background: linear-gradient(135deg, #fd7e14 0%, #e8690b 100%);
             width: 0%;
             transition: width 0.3s ease;
             animation: pulse 1.5s infinite;
+            border-radius: 10px;
         }
         
         @keyframes pulse {
@@ -177,7 +405,8 @@
         .status-text {
             text-align: center;
             font-weight: 600;
-            color: #856404;
+            color: #1e3a5f;
+            font-size: 1rem;
         }
         
         .error-message {
@@ -190,29 +419,398 @@
         }
         
         .help-text {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: #6c757d;
-            margin-top: 5px;
+            margin-top: 0.5rem;
+            line-height: 1.4;
+        }
+        
+        .model-recommendation {
+            background-color: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #bbdefb;
+            margin-top: 15px;
+        }
+        
+        .model-recommendation h4 {
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+        
+        .analyze-button {
+            background-color: #2196f3;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .analyze-button:hover {
+            background-color: #1976d2;
+        }
+        
+        .analyze-button:disabled {
+            background-color: #90caf9;
+            cursor: not-allowed;
+        }
+        
+        .recommendation-details {
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .recommendation-details strong {
+            color: #1976d2;
         }
         
         .footer {
             text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid #e0e0e0;
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            color: #6c757d;
+            font-size: 0.85rem;
+        }
+
+        /* AI Chat Modal Styles */
+        .ai-chat-section {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #fd7e14;
+        }
+
+        .ai-chat-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .ai-chat-header h2 {
+            color: #1e3a5f;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .ai-chat-header p {
             color: #6c757d;
             font-size: 0.9rem;
+        }
+
+        .chat-upload-area {
+            border: 2px dashed #dee2e6;
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            background-color: #f8f9fa;
+            transition: border-color 0.2s ease;
+            margin-bottom: 1rem;
+        }
+
+        .chat-upload-area:hover {
+            border-color: #fd7e14;
+        }
+
+        .chat-upload-area.dragover {
+            border-color: #fd7e14;
+            background-color: #fff3e0;
+        }
+
+        .chat-file-input {
+            display: none;
+        }
+
+        .chat-upload-button {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2d4a6b 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .chat-upload-button:hover {
+            background: linear-gradient(135deg, #2d4a6b 0%, #3d5a7b 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(30, 58, 95, 0.3);
+        }
+
+        .uploaded-files-list {
+            text-align: left;
+            margin-top: 1rem;
+        }
+
+        .uploaded-file-item {
+            background-color: white;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 8px 12px;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            color: #495057;
+            border-left: 3px solid #fd7e14;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 2% auto;
+            border-radius: 8px;
+            width: 95%;
+            max-width: 1200px;
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2d4a6b 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            font-size: 1.25rem;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+            overflow: hidden;
+        }
+
+        .context-info {
+            background-color: #e3f2fd;
+            border: 1px solid #bbdefb;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+        }
+
+        .context-warning {
+            color: #d68910;
+        }
+
+        .context-info h4 {
+            color: #1976d2;
+            margin: 0 0 0.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        .analysis-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .analysis-btn {
+            background: linear-gradient(135deg, #fd7e14 0%, #e8690b 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .analysis-btn:hover {
+            background: linear-gradient(135deg, #e8690b 0%, #d35400 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(253, 126, 20, 0.3);
+        }
+
+        .analysis-btn:disabled {
+            background: #adb5bd;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            background-color: #f8f9fa;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            max-width: 85%;
+        }
+
+        .message.user {
+            background-color: #1e3a5f;
+            color: white;
+            margin-left: auto;
+        }
+
+        .message.assistant {
+            background-color: white;
+            border: 1px solid #dee2e6;
+        }
+
+        .message-content {
+            line-height: 1.5;
+        }
+
+        .message-content h2, .message-content h3, .message-content h4 {
+            color: inherit;
+            margin: 0.25rem 0;
+        }
+
+        .message-content ul, .message-content ol {
+            margin: 0.25rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .message-content li {
+            margin-bottom: 0.1rem;
+        }
+
+        .message-content p {
+            margin: 0.3rem 0;
+        }
+
+        .chat-input-area {
+            border-top: 1px solid #dee2e6;
+            padding: 1rem;
+            background-color: white;
+        }
+
+        .chat-input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            resize: vertical;
+            min-height: 60px;
+            font-family: inherit;
+        }
+
+        .chat-input:focus {
+            border-color: #1e3a5f;
+            box-shadow: 0 0 0 2px rgba(30, 58, 95, 0.1);
+            outline: none;
+        }
+
+        .chat-send-area {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .chat-send-btn {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2d4a6b 100%);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .chat-export-btn {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .loading-indicator {
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-style: italic;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1><strong>Forum Class Transcriber</strong></h1>
-            <p>Upload your MP4 session video and get automated transcripts in multiple formats</p>
+    <div class="header-bar">
+        <div class="header-content">
+            <h1>Forum Class Transcriber</h1>
         </div>
-        
-        <form id="uploadForm" class="form-section">
+    </div>
+    
+    <div class="main-layout">
+        <!-- Sidebar Navigation -->
+        <div class="sidebar">
+            <div class="nav-section">
+                <h3>Tools</h3>
+                <div class="nav-item active" data-view="transcription">                    <span>Generate Transcript</span>
+                </div>
+                <div class="nav-item" data-view="ai-chat">
+                    <span>AI Analysis</span>
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- Content Area -->
+        <div class="content-area">
+            <!-- Transcription View -->
+            <div id="transcription-view" class="view-section active">
+                <div class="container">
+                    <div class="main-card">
+            <div class="card-header">
+                <h2>Generate Transcript</h2>
+                <p>Upload your MP4 session video and get automated transcripts with speaker identification</p>
+            </div>
+            
+            <form id="uploadForm" class="form-section">
             <div class="form-group">
                 <label for="video_file">Select MP4 Video File</label>
                 <div class="file-input-wrapper">
@@ -244,25 +842,25 @@
             </div>
             
             <div class="form-group">
-                <label for="performance_mode">Processing Mode</label>
-                <select id="performance_mode" name="performance_mode" class="privacy-select">
-                    <option value="balanced" selected>Balanced (Recommended)</option>
-                    <option value="fast">Fast (Lower accuracy)</option>
-                    <option value="accurate">Accurate (Slower)</option>
+                <label for="timestamp_precision">Processing Speed</label>
+                <select id="timestamp_precision" name="timestamp_precision" class="privacy-select">
+                    <option value="fast" selected>Fast Processing (sentence timestamps only)</option>
+                    <option value="detailed">Detailed Processing (word-level timestamps)</option>
                 </select>
                 <div class="help-text">
-                    <strong>Fast:</strong> ~2-5x faster, good for drafts<br>
-                    <strong>Balanced:</strong> Optimal speed/accuracy ratio<br>
-                    <strong>Accurate:</strong> Best quality, slower processing
+                    <strong>Fast:</strong> 2x faster, sentence-level timing (~15-20 min)<br>
+                    <strong>Detailed:</strong> Word-level timing, better speaker alignment (~25-30 min)
                 </div>
             </div>
+            
             
             <button type="submit" class="submit-button" id="submitBtn">
                 Generate Transcript
             </button>
             
-            <div id="errorMessage" class="error-message" style="display: none;"></div>
-        </form>
+                <div id="errorMessage" class="error-message" style="display: none;"></div>
+            </form>
+        </div>
         
         <div id="progressSection" class="progress-section">
             <h3>Processing Your Video...</h3>
@@ -273,9 +871,82 @@
             <div id="elapsedTime" style="text-align: center; margin-top: 10px; font-size: 0.9rem; color: #6c757d;"></div>
         </div>
         
-        <div class="footer">
-            <p><strong>Note:</strong> Processing time depends on video length. Longer videos may take 10-30 minutes.</p>
-            <p><strong>⚠️ Accuracy caution:</strong> Do not rely solely on this transcript. Manually verify key information.</p>
+                    <div class="footer">
+                        <p><strong>Processing Time:</strong> Fast mode ~15-20 minutes | Detailed mode ~25-30 minutes</p>
+                        <p><strong>⚠️ Accuracy caution:</strong> Do not rely solely on this transcript. Manually verify key information.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Chat View -->
+            <div id="ai-chat-view" class="view-section">
+                <div class="container">
+                    <div class="main-card">
+                        <div class="card-header">
+                            <h2>AI Transcript Analysis</h2>
+                            <p>Upload existing transcripts (PDF/CSV) to get deep educational insights and analysis</p>
+                        </div>
+                        
+                        <div class="chat-upload-area" id="chatUploadArea">
+                            <input type="file" id="chatFileInput" class="chat-file-input" multiple accept=".pdf,.csv">
+                            <button type="button" class="chat-upload-button" onclick="document.getElementById('chatFileInput').click()">
+                                Upload Transcript Files
+                            </button>
+                            <p style="margin: 0.5rem 0; color: #6c757d; font-size: 0.85rem;">
+                                Supports PDF and CSV files • Multiple files allowed
+                            </p>
+                            <div id="uploadedFilesList" class="uploaded-files-list"></div>
+                        </div>
+                        
+                        <button id="startChatBtn" class="submit-button" style="margin-top: 1rem;" disabled>
+                            Analyze with AI
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Chat Modal -->
+    <div id="aiChatModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>AI Transcript Analysis</h3>
+                <button class="close-modal" onclick="closeAIChat()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="contextInfo" class="context-info" style="display: none;">
+                    <h4>Context Information</h4>
+                    <div id="contextDetails"></div>
+                </div>
+                
+                <div class="analysis-buttons">
+                    <button id="initialAnalysisBtn" class="analysis-btn" onclick="generateInitialAnalysis()">
+                        Generate Initial Analysis
+                    </button>
+                    <button id="exportPdfBtn" class="analysis-btn" onclick="exportConversation('pdf')" style="background: #dc3545;" disabled>
+                        Export as PDF
+                    </button>
+                </div>
+                
+                <div class="chat-container">
+                    <div id="chatMessages" class="chat-messages">
+                        <div class="message assistant">
+                            <div class="message-content">
+                                <strong>Welcome to AI Transcript Analysis!</strong><br>
+                                Upload your transcript files and click "Generate Initial Analysis" for a comprehensive educational assessment, or ask specific questions about your class.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-input-area">
+                        <textarea id="chatInput" class="chat-input" placeholder="Ask a question about your transcript..."></textarea>
+                        <div class="chat-send-area">
+                            <button id="sendChatBtn" class="chat-send-btn" onclick="sendChatMessage()">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -288,6 +959,7 @@
         const progressSection = document.getElementById('progressSection');
         const statusText = document.getElementById('statusText');
         const elapsedTime = document.getElementById('elapsedTime');
+        // Model recommendation removed - always use highest accuracy
         
         let pollInterval;
         
@@ -301,6 +973,8 @@
                 fileName.style.display = 'none';
             }
         });
+        
+        // Model recommendation removed - always use highest accuracy
         
         // Handle form submission
         form.addEventListener('submit', function(e) {
@@ -355,13 +1029,66 @@
             progressSection.style.display = 'block';
             form.style.display = 'none';
             
-            // Show processing message and redirect to results when complete
-            statusText.textContent = 'Processing your video... This may take several minutes depending on video length.';
-            
-            // Simple redirect to results page after a delay
-            setTimeout(() => {
-                window.location.href = `/results/${jobId}`;
-            }, 5000);
+            // Start polling for status updates
+            pollInterval = setInterval(() => {
+                fetch(`/status/${jobId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            showError(data.error);
+                            resetForm();
+                            clearInterval(pollInterval);
+                            return;
+                        }
+                        
+                        // Update status text
+                        statusText.textContent = data.step || 'Processing...';
+                        
+                        // Update elapsed time
+                        if (data.elapsed_time) {
+                            elapsedTime.textContent = `Elapsed: ${data.elapsed_time}`;
+                        }
+                        
+                        // Update progress bar based on status
+                        const progressFill = document.querySelector('.progress-fill');
+                        if (data.status === 'processing') {
+                            // Animate progress based on processing stage
+                            if (data.step.includes('Step 1/4')) {
+                                progressFill.style.width = '25%';
+                            } else if (data.step.includes('Step 2/4')) {
+                                progressFill.style.width = '50%';
+                            } else if (data.step.includes('Step 3/4')) {
+                                progressFill.style.width = '75%';
+                            } else if (data.step.includes('Step 4/4')) {
+                                progressFill.style.width = '90%';
+                            }
+                        }
+                        
+                        // Check if processing is complete
+                        if (data.status === 'completed') {
+                            progressFill.style.width = '100%';
+                            statusText.textContent = 'Processing complete! Redirecting to results...';
+                            clearInterval(pollInterval);
+                            
+                            
+                            // Redirect to results page
+                            setTimeout(() => {
+                                window.location.href = `/results/${jobId}`;
+                            }, 2000);
+                            
+                        } else if (data.status === 'error') {
+                            showError(data.error || 'Processing failed');
+                            clearInterval(pollInterval);
+                            resetForm();
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Status polling error:', error);
+                        showError('Failed to check processing status');
+                        clearInterval(pollInterval);
+                        resetForm();
+                    });
+            }, 3000); // Poll every 3 seconds
         }
         
         function showError(message) {
@@ -378,6 +1105,411 @@
             submitBtn.textContent = 'Generate Transcript';
             progressSection.style.display = 'none';
             form.style.display = 'block';
+        }
+
+        // Navigation functionality
+        function initializeNavigation() {
+            const navItems = document.querySelectorAll('.nav-item[data-view]');
+            const viewSections = document.querySelectorAll('.view-section');
+
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const targetView = this.getAttribute('data-view');
+                    
+                    // Update nav active state
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Update view active state
+                    viewSections.forEach(view => view.classList.remove('active'));
+                    document.getElementById(targetView + '-view').classList.add('active');
+                });
+            });
+        }
+
+        // Recent transcripts management
+        function updateRecentTranscripts() {
+            const recentTranscriptsDiv = document.getElementById('recentTranscripts');
+            const savedTranscripts = JSON.parse(localStorage.getItem('recentTranscripts') || '[]');
+            
+            if (savedTranscripts.length === 0) {
+                recentTranscriptsDiv.innerHTML = `
+                    <div class="empty-state">
+                        <h4>No transcripts yet</h4>
+                        <p>Generate or upload transcripts to see them here</p>
+                    </div>
+                `;
+                return;
+            }
+
+            recentTranscriptsDiv.innerHTML = savedTranscripts.map(transcript => `
+                <div class="transcript-item">
+                    <div class="transcript-info">
+                        <h4>${transcript.filename}</h4>
+                        <p>${transcript.date} • ${transcript.type}</p>
+                    </div>
+                    <div class="transcript-actions">
+                        <button class="btn-small btn-primary" onclick="analyzeTranscript('${transcript.id}')">
+                            Analyze
+                        </button>
+                        ${transcript.downloadUrl ? `<a href="${transcript.downloadUrl}" class="btn-small btn-secondary">Download</a>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addRecentTranscript(transcript) {
+            const savedTranscripts = JSON.parse(localStorage.getItem('recentTranscripts') || '[]');
+            
+            // Add new transcript to the beginning
+            savedTranscripts.unshift({
+                id: transcript.id,
+                filename: transcript.filename,
+                date: new Date().toLocaleDateString(),
+                type: transcript.type || 'Generated',
+                downloadUrl: transcript.downloadUrl
+            });
+            
+            // Keep only last 10 transcripts
+            if (savedTranscripts.length > 10) {
+                savedTranscripts.splice(10);
+            }
+            
+            localStorage.setItem('recentTranscripts', JSON.stringify(savedTranscripts));
+            updateRecentTranscripts();
+        }
+
+        function analyzeTranscript(transcriptId) {
+            // Switch to AI chat view
+            document.querySelector('.nav-item[data-view="ai-chat"]').click();
+            
+            // Logic to load and analyze the specific transcript
+            // This would connect with the backend to load the transcript content
+            console.log('Analyzing transcript:', transcriptId);
+        }
+
+        // AI Chat functionality
+        let currentChatSession = null;
+        let uploadedChatFiles = [];
+
+        // Handle chat file upload
+        const chatFileInput = document.getElementById('chatFileInput');
+        const uploadedFilesList = document.getElementById('uploadedFilesList');
+        const startChatBtn = document.getElementById('startChatBtn');
+
+        chatFileInput.addEventListener('change', function(e) {
+            uploadedChatFiles = Array.from(e.target.files);
+            updateUploadedFilesList();
+            startChatBtn.disabled = uploadedChatFiles.length === 0;
+        });
+
+        function updateUploadedFilesList() {
+            uploadedFilesList.innerHTML = '';
+            uploadedChatFiles.forEach(file => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'uploaded-file-item';
+                fileItem.textContent = `${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`;
+                uploadedFilesList.appendChild(fileItem);
+            });
+        }
+
+        // Start AI Chat
+        startChatBtn.addEventListener('click', function() {
+            if (uploadedChatFiles.length === 0) return;
+
+            const formData = new FormData();
+            uploadedChatFiles.forEach(file => {
+                formData.append('transcript_files', file);
+            });
+
+            startChatBtn.disabled = true;
+            startChatBtn.textContent = 'Processing...';
+
+            fetch('/chat/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                
+                currentChatSession = data.session_id;
+                showContextInfo(data.context_info, data.filenames);
+                openAIChat();
+                
+                startChatBtn.disabled = false;
+                startChatBtn.textContent = 'Analyze with AI';
+            })
+            .catch(error => {
+                alert('Error uploading files: ' + error.message);
+                startChatBtn.disabled = false;
+                startChatBtn.textContent = 'Analyze with AI';
+            });
+        });
+
+        function showContextInfo(contextInfo, filenames) {
+            const contextInfoDiv = document.getElementById('contextInfo');
+            const contextDetails = document.getElementById('contextDetails');
+            
+            contextDetails.innerHTML = `
+                <p><strong>Files:</strong> ${filenames.join(', ')}</p>
+                <p><strong>Content Size:</strong> ~${(contextInfo.content_words || 0).toLocaleString()} words (${contextInfo.percentage_used || 0}% of AI context limit)</p>
+                <p><strong>Remaining Capacity:</strong> ~${(contextInfo.remaining_words || 0).toLocaleString()} words available for conversation</p>
+                <p class="context-warning"><strong>Warning:</strong> The model is not yet optimized for mathematical calculations and may produce errors in numerical analysis.</p>
+            `;
+            
+            contextInfoDiv.style.display = 'block';
+        }
+
+        function openAIChat() {
+            document.getElementById('aiChatModal').style.display = 'block';
+        }
+
+        function closeAIChat() {
+            document.getElementById('aiChatModal').style.display = 'none';
+        }
+
+        function generateInitialAnalysis() {
+            if (!currentChatSession) return;
+
+            const analysisBtn = document.getElementById('initialAnalysisBtn');
+            const chatMessages = document.getElementById('chatMessages');
+            
+            analysisBtn.disabled = true;
+            analysisBtn.textContent = 'Analyzing...';
+
+            // Add loading message
+            addChatMessage('user', 'Please provide an initial comprehensive analysis of this transcript.');
+            addLoadingMessage();
+
+            fetch(`/chat/analyze/${currentChatSession}`, {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                
+                removeLoadingMessage();
+                addChatMessage('assistant', data.analysis);
+                document.getElementById('exportPdfBtn').disabled = false;
+                
+                
+                analysisBtn.disabled = false;
+                analysisBtn.textContent = '🔍 Generate Initial Analysis';
+            })
+            .catch(error => {
+                removeLoadingMessage();
+                addChatMessage('assistant', 'Error generating analysis: ' + error.message);
+                analysisBtn.disabled = false;
+                analysisBtn.textContent = '🔍 Generate Initial Analysis';
+            });
+        }
+
+        function sendChatMessage() {
+            if (!currentChatSession) return;
+
+            const chatInput = document.getElementById('chatInput');
+            const message = chatInput.value.trim();
+            
+            if (!message) return;
+
+            const sendBtn = document.getElementById('sendChatBtn');
+            sendBtn.disabled = true;
+            sendBtn.textContent = 'Sending...';
+
+            addChatMessage('user', message);
+            addLoadingMessage();
+            chatInput.value = '';
+
+            fetch(`/chat/message/${currentChatSession}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message: message })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                
+                removeLoadingMessage();
+                addChatMessage('assistant', data.response);
+                document.getElementById('exportPdfBtn').disabled = false;
+                
+                sendBtn.disabled = false;
+                sendBtn.textContent = 'Send';
+            })
+            .catch(error => {
+                removeLoadingMessage();
+                addChatMessage('assistant', 'Error: ' + error.message);
+                sendBtn.disabled = false;
+                sendBtn.textContent = 'Send';
+            });
+        }
+
+        function addChatMessage(role, content) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${role}`;
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            contentDiv.innerHTML = formatMessageContent(content);
+            
+            messageDiv.appendChild(contentDiv);
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function addLoadingMessage() {
+            const chatMessages = document.getElementById('chatMessages');
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'loading-indicator';
+            loadingDiv.id = 'loadingMessage';
+            loadingDiv.textContent = 'AI is thinking...';
+            chatMessages.appendChild(loadingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function removeLoadingMessage() {
+            const loadingMessage = document.getElementById('loadingMessage');
+            if (loadingMessage) {
+                loadingMessage.remove();
+            }
+        }
+
+        function formatMessageContent(content) {
+            // Simple markdown-like formatting
+            return content
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/^## (.*$)/gm, '<h3>$1</h3>')
+                .replace(/^### (.*$)/gm, '<h4>$1</h4>')
+                .replace(/^- (.*$)/gm, '<li>$1</li>')
+                .replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>')
+                .replace(/\n/g, '<br>');
+        }
+
+        function exportConversation(format = 'pdf') {
+            if (!currentChatSession) return;
+            
+            window.open(`/chat/export/${currentChatSession}/pdf`, '_blank');
+        }
+
+        // Allow Enter key to send message
+        document.getElementById('chatInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendChatMessage();
+            }
+        });
+
+        // Initialize app when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeNavigation();
+        });
+
+        // Previous Conversations Management
+        function updatePreviousConversations() {
+            const previousConversationsDiv = document.getElementById('previousConversations');
+            
+            fetch('/chat/sessions')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.sessions.length === 0) {
+                        previousConversationsDiv.innerHTML = `
+                            <div class="empty-state">
+                                <h4>No conversations yet</h4>
+                                <p>Start AI analysis to see conversations here</p>
+                            </div>
+                        `;
+                        return;
+                    }
+
+                    previousConversationsDiv.innerHTML = data.sessions.map(session => `
+                        <div class="transcript-item">
+                            <div class="transcript-info">
+                                <h4>${session.filenames.join(', ')}</h4>
+                                <p>${new Date(session.created_at).toLocaleDateString()} • ${session.message_count} messages</p>
+                            </div>
+                            <div class="transcript-actions">
+                                <button class="btn-small btn-primary" onclick="resumeConversation('${session.session_id}')">
+                                    Resume
+                                </button>
+                                <button class="btn-small btn-secondary" onclick="exportPreviousConversation('${session.session_id}')">
+                                    Export
+                                </button>
+                            </div>
+                        </div>
+                    `).join('');
+                })
+                .catch(error => {
+                    console.error('Error loading conversations:', error);
+                });
+        }
+
+        function resumeConversation(sessionId) {
+            fetch(`/chat/resume/${sessionId}`, {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                
+                currentChatSession = sessionId;
+                showContextInfo(data.context_info, data.filenames);
+                
+                // Load conversation history
+                const chatMessages = document.getElementById('chatMessages');
+                chatMessages.innerHTML = '';
+                
+                // Add welcome message
+                addChatMessage('assistant', 'Welcome back! Your previous conversation has been restored.');
+                
+                // Load previous messages
+                data.conversation_history.forEach(message => {
+                    addChatMessage(message.role, message.content);
+                });
+                
+                // Enable export button if there are messages
+                if (data.conversation_history.length > 0) {
+                    document.getElementById('exportPdfBtn').disabled = false;
+                }
+                
+                // Switch to AI chat view and open modal
+                document.querySelector('.nav-item[data-view="ai-chat"]').click();
+                openAIChat();
+            })
+            .catch(error => {
+                alert('Error resuming conversation: ' + error.message);
+            });
+        }
+
+        function exportPreviousConversation(sessionId) {
+            window.open(`/chat/export/${sessionId}/pdf`, '_blank');
+        }
+
+        // Handle AI chat file uploads and add to recent transcripts
+        function handleChatUploadSuccess(data) {
+            // Add uploaded files to recent transcripts
+            data.filenames.forEach(filename => {
+                addRecentTranscript({
+                    id: data.session_id + '_' + filename,
+                    filename: filename,
+                    type: 'Uploaded',
+                    downloadUrl: null
+                });
+            });
+            
+            // Update conversations list
+            updatePreviousConversations();
         }
     </script>
 </body>

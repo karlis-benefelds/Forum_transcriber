@@ -17,7 +17,7 @@ from src.performance_monitor import PerformanceMonitor
 # Note: create_simplified_csv and create_simplified_transcript are not directly used in the main process_lecture pipeline
 # but are kept in report_generator.py if needed for fallback scenarios not handled by this main function.
 
-def process_lecture(audio_path, class_id, curl_string, privacy_mode="names", user_terms=None, performance_mode="balanced"):
+def process_lecture(audio_path, class_id, curl_string, privacy_mode="names", user_terms=None, model_size=None, target_quality="balanced"):
     """
     Main pipeline to process lecture audio, fetch forum data, transcribe, and generate reports.
     Args:
@@ -26,7 +26,8 @@ def process_lecture(audio_path, class_id, curl_string, privacy_mode="names", use
         curl_string (str): The cURL string for Forum API authentication.
         privacy_mode (str): 'names', 'ids', or 'both' for report generation.
         user_terms (list): List of custom terms to preserve spellings (currently unused).
-        performance_mode (str): 'fast', 'balanced', or 'accurate' processing mode.
+        model_size (str): Specific Whisper model size, or None for intelligent selection.
+        target_quality (str): "fastest", "balanced", or "highest" - used if model_size is None.
     Returns:
         list: A list of tuples, each containing (privacy_mode, pdf_path, csv_path).
     """
@@ -41,34 +42,17 @@ def process_lecture(audio_path, class_id, curl_string, privacy_mode="names", use
         preprocessor = AudioPreprocessor()
         fixed_path = preprocessor.validate_and_fix_file(audio_path)
         
-        # Get audio duration for performance monitoring
-        from pydub import AudioSegment
-        audio = AudioSegment.from_file(fixed_path)
-        audio_duration = len(audio) / 1000
+        print(f"\nStep 3/4: Transcribing...")
         
-        # Determine optimal settings based on performance mode and duration
-        model_size, segment_length, max_workers = _get_optimal_settings(
-            audio_duration, performance_mode
-        )
-
-        print(f"\nStep 3/4: Transcribing (Mode: {performance_mode})...")
-        print(f"Settings: model={model_size}, segment_length={segment_length}s, workers={max_workers}")
+        # Optimal speed/quality balance
+        model_size = 'medium'
+        print(f"Using medium model for optimal speed/quality balance")
         
         # Start performance monitoring
-        monitor.start_monitoring({
-            'audio_duration': audio_duration,
-            'model_size': model_size,
-            'device': 'auto',  # Will be determined by TranscriptionProcessor
-            'total_segments': max(1, int(audio_duration // segment_length))
-        })
+        monitor.start_monitoring({'model_size': model_size, 'device': 'cuda' if torch.cuda.is_available() else 'cpu'})
         
-        tp = TranscriptionProcessor(
-            model_size=model_size,
-            segment_length=segment_length,
-            max_workers=max_workers
-        )
-        
-        transcript_path = tp.transcribe(fixed_path, class_id, parallel=True)
+        tp = TranscriptionProcessor(model_size=model_size)
+        transcript_path = tp.transcribe(fixed_path, class_id)
 
         print("\nStep 4/4: Preparing outputs...")
 
@@ -137,65 +121,6 @@ def process_lecture(audio_path, class_id, curl_string, privacy_mode="names", use
             print("\nTranscription failed. Please try again with a different file or path.")
         return []
 
-def _get_optimal_settings(audio_duration_seconds: float, performance_mode: str = "balanced"):
-    """
-    Determine optimal transcription settings based on audio duration and performance mode.
-    
-    Args:
-        audio_duration_seconds: Duration of audio in seconds
-        performance_mode: 'fast', 'balanced', or 'accurate'
-    
-    Returns:
-        tuple: (model_size, segment_length, max_workers)
-    """
-    duration_minutes = audio_duration_seconds / 60
-    
-    # Import to check available devices
-    try:
-        import torch
-        has_gpu = torch.cuda.is_available() or (hasattr(torch.backends, 'mps') and torch.backends.mps.is_available())
-    except ImportError:
-        has_gpu = False
-    
-    if performance_mode == "fast":
-        if duration_minutes > 90:
-            model_size = "base"
-            segment_length = 1800  # 30 minutes
-            max_workers = 4 if has_gpu else 2
-        elif duration_minutes > 30:
-            model_size = "small"
-            segment_length = 3600  # 1 hour
-            max_workers = 3 if has_gpu else 2
-        else:
-            model_size = "small"
-            segment_length = 7200  # 2 hours
-            max_workers = 2
-    
-    elif performance_mode == "accurate":
-        if has_gpu:
-            model_size = "large" if duration_minutes < 120 else "medium"
-            segment_length = 3600  # 1 hour
-            max_workers = 2
-        else:
-            model_size = "medium"
-            segment_length = 7200  # 2 hours  
-            max_workers = 1
-    
-    else:  # balanced
-        if duration_minutes > 120:
-            model_size = "small" if not has_gpu else "medium"
-            segment_length = 1800  # 30 minutes
-            max_workers = 4 if has_gpu else 2
-        elif duration_minutes > 60:
-            model_size = "medium" if has_gpu else "small"
-            segment_length = 3600  # 1 hour
-            max_workers = 3 if has_gpu else 2
-        else:
-            model_size = "medium"
-            segment_length = 7200  # 2 hours
-            max_workers = 2
-    
-    return model_size, segment_length, max_workers
 
 if __name__ == "__main__":
     # Command-line argument parsing instead of input() for a cleaner app structure
@@ -206,6 +131,10 @@ if __name__ == "__main__":
                         help="Student name privacy mode: 'names', 'ids', or 'both'.")
     parser.add_argument('--class_id', type=str, help="Optional: Class ID. Will try to auto-derive from cURL if not provided.")
     parser.add_argument('--user_terms', type=str, default="", help="Optional: Comma-separated custom terms to preserve spellings.")
+    parser.add_argument('--model_size', type=str, choices=['tiny', 'base', 'small', 'medium', 'large'], 
+                        help="Whisper model size. If not specified, intelligent selection will be used.")
+    parser.add_argument('--target_quality', type=str, choices=['fastest', 'balanced', 'highest'], default='balanced',
+                        help="Quality target for automatic model selection: 'fastest', 'balanced', or 'highest'.")
 
     args = parser.parse_args()
 
@@ -213,6 +142,8 @@ if __name__ == "__main__":
     AUDIO_PATH = args.audio_path
     PRIVACY_MODE = args.privacy_mode
     USER_TERMS = [t.strip() for t in args.user_terms.split(",") if t.strip()]
+    MODEL_SIZE = args.model_size
+    TARGET_QUALITY = args.target_quality
 
     # Auto-derive Class ID from the cURL (uses existing helper)
     _ids = extract_ids_from_curl(raw_curl)
@@ -227,13 +158,17 @@ if __name__ == "__main__":
     print(f"Class ID (detected): {CLASS_ID}")
     print(f"Media: {AUDIO_PATH}")
     print(f"Privacy mode: {PRIVACY_MODE}")
+    if MODEL_SIZE:
+        print(f"Model size: {MODEL_SIZE}")
+    else:
+        print(f"Target quality: {TARGET_QUALITY} (intelligent model selection)")
     if USER_TERMS:
         print(f"Custom terms: {USER_TERMS}")
     print("\nStarting the transcript generation process…")
     print("⏳ This can take a while depending on file length and model size...")
 
     # Run the main processing function
-    outs = process_lecture(AUDIO_PATH, CLASS_ID, raw_curl, PRIVACY_MODE, USER_TERMS)
+    outs = process_lecture(AUDIO_PATH, CLASS_ID, raw_curl, PRIVACY_MODE, USER_TERMS, MODEL_SIZE, TARGET_QUALITY)
 
     # CUDA cleanup
     try:

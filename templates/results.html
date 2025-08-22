@@ -13,49 +13,82 @@
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background-color: #f5f5f5;
+            background-color: #f8f9fa;
             line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .header-bar {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2d4a6b 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .header-content h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0;
+            color: white;
         }
         
         .container {
             max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .main-card {
             background-color: white;
-            min-height: 100vh;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 2rem;
+            margin-bottom: 1.5rem;
         }
         
-        .header {
+        .card-header {
             text-align: center;
-            margin-bottom: 30px;
-            padding: 20px 0;
-            border-bottom: 2px solid #e0e0e0;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #e9ecef;
         }
         
-        .header h1 {
-            color: #28a745;
-            font-size: 2.2rem;
-            font-weight: 300;
-            margin-bottom: 10px;
+        .card-header h1 {
+            color: #1e3a5f;
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
         }
         
-        .header p {
-            color: #666;
-            font-size: 1.1rem;
+        .card-header p {
+            color: #6c757d;
+            font-size: 1rem;
+            margin: 0;
         }
         
         .success-icon {
-            font-size: 4rem;
-            color: #28a745;
-            margin-bottom: 20px;
+            font-size: 3rem;
+            color: #fd7e14;
+            margin-bottom: 1rem;
         }
         
+        
         .results-section {
-            background-color: #d4edda;
-            padding: 30px;
-            border-radius: 8px;
-            border: 1px solid #c3e6cb;
-            margin-bottom: 30px;
+            background-color: white;
+            padding: 0;
+            border-radius: 0;
+            border: none;
+            margin-bottom: 0;
         }
         
         .file-info {
@@ -63,12 +96,14 @@
             padding: 20px;
             border-radius: 6px;
             margin-bottom: 25px;
+            border-left: 3px solid #fd7e14;
         }
         
         .file-info h3 {
-            color: #495057;
+            color: #1e3a5f;
             margin-bottom: 10px;
             font-size: 1.1rem;
+            font-weight: 600;
         }
         
         .file-info p {
@@ -81,9 +116,10 @@
         }
         
         .download-section h3 {
-            color: #495057;
+            color: #1e3a5f;
             margin-bottom: 20px;
             font-size: 1.3rem;
+            font-weight: 600;
         }
         
         .privacy-mode-group {
@@ -95,7 +131,7 @@
         }
         
         .privacy-mode-title {
-            color: #343a40;
+            color: #1e3a5f;
             font-size: 1.1rem;
             font-weight: 600;
             margin-bottom: 15px;
@@ -128,21 +164,25 @@
         }
         
         .pdf-btn {
-            background-color: #dc3545;
+            background-color: #1e3a5f;
             color: white;
         }
         
         .pdf-btn:hover {
-            background-color: #c82333;
+            background-color: #2d4a6b;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(30, 58, 95, 0.3);
         }
         
         .csv-btn {
-            background-color: #17a2b8;
+            background: linear-gradient(135deg, #fd7e14 0%, #e8690b 100%);
             color: white;
         }
         
         .csv-btn:hover {
-            background-color: #138496;
+            background: linear-gradient(135deg, #e8690b 0%, #d35400 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(253, 126, 20, 0.3);
         }
         
         .json-btn {
@@ -160,16 +200,17 @@
         }
         
         .actions-section {
-            background-color: #f8f9fa;
-            padding: 25px;
+            background-color: white;
+            padding: 2rem;
             border-radius: 8px;
-            border: 1px solid #dee2e6;
-            margin-top: 30px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-top: 1.5rem;
         }
         
         .actions-section h3 {
-            color: #495057;
+            color: #1e3a5f;
             margin-bottom: 20px;
+            font-weight: 600;
         }
         
         .action-buttons {
@@ -190,39 +231,46 @@
         }
         
         .primary-btn {
-            background-color: #007bff;
+            background: linear-gradient(135deg, #fd7e14 0%, #e8690b 100%);
             color: white;
+            box-shadow: 0 2px 4px rgba(253, 126, 20, 0.2);
         }
         
         .primary-btn:hover {
-            background-color: #0056b3;
+            background: linear-gradient(135deg, #e8690b 0%, #d35400 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(253, 126, 20, 0.3);
         }
         
         .secondary-btn {
-            background-color: #6c757d;
+            background-color: #1e3a5f;
             color: white;
         }
         
         .secondary-btn:hover {
-            background-color: #545b62;
+            background-color: #2d4a6b;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(30, 58, 95, 0.3);
         }
         
         .warning-section {
-            background-color: #fff3cd;
-            padding: 20px;
-            border-radius: 6px;
-            border: 1px solid #ffeaa7;
-            margin-top: 30px;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-top: 1.5rem;
+            border-left: 4px solid #fd7e14;
         }
         
         .warning-section h4 {
-            color: #856404;
+            color: #1e3a5f;
             margin-bottom: 10px;
             font-size: 1.1rem;
+            font-weight: 600;
         }
         
         .warning-section p {
-            color: #856404;
+            color: #6c757d;
             margin-bottom: 8px;
         }
         
@@ -233,7 +281,7 @@
         
         .spinner {
             border: 4px solid #f3f3f3;
-            border-top: 4px solid #007bff;
+            border-top: 4px solid #fd7e14;
             border-radius: 50%;
             width: 40px;
             height: 40px;
@@ -246,6 +294,201 @@
             100% { transform: rotate(360deg); }
         }
         
+        /* AI Chat Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 2% auto;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 800px;
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2d4a6b 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            font-size: 1.25rem;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+            overflow: hidden;
+        }
+
+        .context-info {
+            background-color: #e3f2fd;
+            border: 1px solid #bbdefb;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+        }
+
+        .context-info h4 {
+            color: #1976d2;
+            margin: 0 0 0.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        .analysis-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .analysis-btn {
+            background: linear-gradient(135deg, #fd7e14 0%, #e8690b 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .analysis-btn:hover {
+            background: linear-gradient(135deg, #e8690b 0%, #d35400 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(253, 126, 20, 0.3);
+        }
+
+        .analysis-btn:disabled {
+            background: #adb5bd;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            background-color: #f8f9fa;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            max-width: 85%;
+        }
+
+        .message.user {
+            background-color: #1e3a5f;
+            color: white;
+            margin-left: auto;
+        }
+
+        .message.assistant {
+            background-color: white;
+            border: 1px solid #dee2e6;
+            border-left: 3px solid #fd7e14;
+        }
+
+        .message-content {
+            line-height: 1.6;
+        }
+
+        .message-content h2, .message-content h3, .message-content h4 {
+            color: inherit;
+            margin: 0.5rem 0;
+        }
+
+        .message-content ul, .message-content ol {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .chat-input-area {
+            border-top: 1px solid #dee2e6;
+            padding: 1rem;
+            background-color: white;
+        }
+
+        .chat-input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            resize: vertical;
+            min-height: 60px;
+            font-family: inherit;
+        }
+
+        .chat-input:focus {
+            border-color: #1e3a5f;
+            box-shadow: 0 0 0 2px rgba(30, 58, 95, 0.1);
+            outline: none;
+        }
+
+        .chat-send-area {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .chat-send-btn {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2d4a6b 100%);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .loading-indicator {
+            text-align: center;
+            padding: 1rem;
+            color: #6c757d;
+            font-style: italic;
+        }
+
         @media (max-width: 600px) {
             .download-buttons {
                 flex-direction: column;
@@ -262,19 +505,26 @@
     </style>
 </head>
 <body>
+    <div class="header-bar">
+        <div class="header-content">
+            <h1>Forum Class Transcriber</h1>
+        </div>
+    </div>
+    
     <div class="container">
-        <div class="header">
-            <h1><strong>Transcript Ready!</strong></h1>
-            <p>Your video has been successfully processed</p>
-        </div>
+        <div class="main-card">
+            <div class="card-header">
+                <div class="success-icon">✅</div>
+                <h1>Transcript Ready!</h1>
+                <p>Your video has been successfully processed</p>
+            </div>
         
-        <div id="loading" class="loading">
-            <div class="spinner"></div>
-            <p>Loading results...</p>
-        </div>
-        
-        <div id="results-content" style="display: none;">
-            <div class="results-section">
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                <p>Loading results...</p>
+            </div>
+            
+            <div id="results-content" class="results-section" style="display: none;">
                 <div class="file-info" id="fileInfo">
                     <!-- File information will be populated by JavaScript -->
                 </div>
@@ -286,22 +536,66 @@
                     </div>
                 </div>
             </div>
-            
-            <div class="actions-section">
-                <h3>What's Next?</h3>
-                <div class="action-buttons">
-                    <a href="/" class="action-btn primary-btn">Process Another Video</a>
-                    <button onclick="window.print()" class="action-btn secondary-btn">Print This Page</button>
-                </div>
+        </div>
+        
+        <div id="actions-section" class="actions-section" style="display: none;">
+            <h3>What's Next?</h3>
+            <div class="action-buttons">
+                <button id="saveAndAnalyzeBtn" class="action-btn primary-btn" onclick="saveAndAnalyze()">🤖 Save & Analyze with AI</button>
+                <a href="/" class="action-btn secondary-btn">Process Another Video</a>
+                <button onclick="window.print()" class="action-btn secondary-btn">Print This Page</button>
             </div>
-            
-            <div class="warning-section">
-                <h4>⚠️ Important Accuracy Notice</h4>
-                <p><strong>Do not rely solely on this automated transcript.</strong> AI transcription may contain errors, especially with:</p>
-                <p>• Technical terms, names, and specialized vocabulary</p>
-                <p>• Audio with background noise or multiple speakers</p>
-                <p>• Accented speech or unclear pronunciation</p>
-                <p><strong>Always manually verify key information before using for official purposes.</strong></p>
+        </div>
+        
+        <div id="warning-section" class="warning-section" style="display: none;">
+            <h4>⚠️ Important Accuracy Notice</h4>
+            <p><strong>Do not rely solely on this automated transcript.</strong> AI transcription may contain errors, especially with:</p>
+            <p>• Technical terms, names, and specialized vocabulary</p>
+            <p>• Audio with background noise or multiple speakers</p>
+            <p>• Accented speech or unclear pronunciation</p>
+            <p><strong>Always manually verify key information before using for official purposes.</strong></p>
+        </div>
+    </div>
+
+    <!-- AI Chat Modal -->
+    <div id="aiChatModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>🤖 AI Transcript Analysis</h3>
+                <button class="close-modal" onclick="closeAIChat()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="contextInfo" class="context-info" style="display: none;">
+                    <h4>📊 Context Information</h4>
+                    <div id="contextDetails"></div>
+                </div>
+                
+                <div class="analysis-buttons">
+                    <button id="initialAnalysisBtn" class="analysis-btn" onclick="generateInitialAnalysis()">
+                        🔍 Generate Initial Analysis
+                    </button>
+                    <button id="exportChatBtn" class="analysis-btn" onclick="exportConversation()" style="background: #6c757d;" disabled>
+                        💾 Export Conversation
+                    </button>
+                </div>
+                
+                <div class="chat-container">
+                    <div id="chatMessages" class="chat-messages">
+                        <div class="message assistant">
+                            <div class="message-content">
+                                <strong>Welcome to AI Transcript Analysis!</strong><br>
+                                This transcript has been automatically loaded. Click "Generate Initial Analysis" for a comprehensive educational assessment, or ask specific questions about your class.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-input-area">
+                        <textarea id="chatInput" class="chat-input" placeholder="Ask a question about your transcript..."></textarea>
+                        <div class="chat-send-area">
+                            <button id="sendChatBtn" class="chat-send-btn" onclick="sendChatMessage()">Send</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -336,11 +630,15 @@
         function displayResults(data) {
             const loading = document.getElementById('loading');
             const resultsContent = document.getElementById('results-content');
+            const actionsSection = document.getElementById('actions-section');
+            const warningSection = document.getElementById('warning-section');
             const fileInfo = document.getElementById('fileInfo');
             const downloadLinks = document.getElementById('downloadLinks');
             
             loading.style.display = 'none';
             resultsContent.style.display = 'block';
+            actionsSection.style.display = 'block';
+            warningSection.style.display = 'block';
             
             // Display file information
             const processingTime = data.end_time && data.start_time ? 
@@ -406,6 +704,194 @@
             const diffSecs = Math.floor((diffMs % 60000) / 1000);
             return `${diffMins}m ${diffSecs}s`;
         }
+
+        // AI Chat functionality
+        let currentChatSession = null;
+
+        function saveAndAnalyze() {
+            const saveAndAnalyzeBtn = document.getElementById('saveAndAnalyzeBtn');
+            saveAndAnalyzeBtn.disabled = true;
+            saveAndAnalyzeBtn.textContent = 'Processing...';
+
+            fetch(`/chat/save_and_analyze/${jobId}`, {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                
+                currentChatSession = data.session_id;
+                showContextInfo(data.context_info, [data.filename]);
+                openAIChat();
+                
+                saveAndAnalyzeBtn.disabled = false;
+                saveAndAnalyzeBtn.textContent = '🤖 Save & Analyze with AI';
+            })
+            .catch(error => {
+                alert('Error starting AI analysis: ' + error.message);
+                saveAndAnalyzeBtn.disabled = false;
+                saveAndAnalyzeBtn.textContent = '🤖 Save & Analyze with AI';
+            });
+        }
+
+        function showContextInfo(contextInfo, filenames) {
+            const contextInfoDiv = document.getElementById('contextInfo');
+            const contextDetails = document.getElementById('contextDetails');
+            
+            contextDetails.innerHTML = `
+                <p><strong>File:</strong> ${filenames.join(', ')}</p>
+                <p><strong>Content Size:</strong> ~${contextInfo.content_words.toLocaleString()} words (${contextInfo.percentage_used}% of AI context limit)</p>
+                <p><strong>Remaining Capacity:</strong> ~${contextInfo.remaining_words.toLocaleString()} words available for conversation</p>
+            `;
+            
+            contextInfoDiv.style.display = 'block';
+        }
+
+        function openAIChat() {
+            document.getElementById('aiChatModal').style.display = 'block';
+        }
+
+        function closeAIChat() {
+            document.getElementById('aiChatModal').style.display = 'none';
+        }
+
+        function generateInitialAnalysis() {
+            if (!currentChatSession) return;
+
+            const analysisBtn = document.getElementById('initialAnalysisBtn');
+            
+            analysisBtn.disabled = true;
+            analysisBtn.textContent = 'Analyzing...';
+
+            // Add loading message
+            addChatMessage('user', 'Please provide an initial comprehensive analysis of this transcript.');
+            addLoadingMessage();
+
+            fetch(`/chat/analyze/${currentChatSession}`, {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                
+                removeLoadingMessage();
+                addChatMessage('assistant', data.analysis);
+                document.getElementById('exportChatBtn').disabled = false;
+                
+                analysisBtn.disabled = false;
+                analysisBtn.textContent = '🔍 Generate Initial Analysis';
+            })
+            .catch(error => {
+                removeLoadingMessage();
+                addChatMessage('assistant', 'Error generating analysis: ' + error.message);
+                analysisBtn.disabled = false;
+                analysisBtn.textContent = '🔍 Generate Initial Analysis';
+            });
+        }
+
+        function sendChatMessage() {
+            if (!currentChatSession) return;
+
+            const chatInput = document.getElementById('chatInput');
+            const message = chatInput.value.trim();
+            
+            if (!message) return;
+
+            const sendBtn = document.getElementById('sendChatBtn');
+            sendBtn.disabled = true;
+            sendBtn.textContent = 'Sending...';
+
+            addChatMessage('user', message);
+            addLoadingMessage();
+            chatInput.value = '';
+
+            fetch(`/chat/message/${currentChatSession}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message: message })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                
+                removeLoadingMessage();
+                addChatMessage('assistant', data.response);
+                document.getElementById('exportChatBtn').disabled = false;
+                
+                sendBtn.disabled = false;
+                sendBtn.textContent = 'Send';
+            })
+            .catch(error => {
+                removeLoadingMessage();
+                addChatMessage('assistant', 'Error: ' + error.message);
+                sendBtn.disabled = false;
+                sendBtn.textContent = 'Send';
+            });
+        }
+
+        function addChatMessage(role, content) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${role}`;
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            contentDiv.innerHTML = formatMessageContent(content);
+            
+            messageDiv.appendChild(contentDiv);
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function addLoadingMessage() {
+            const chatMessages = document.getElementById('chatMessages');
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'loading-indicator';
+            loadingDiv.id = 'loadingMessage';
+            loadingDiv.textContent = 'AI is thinking...';
+            chatMessages.appendChild(loadingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function removeLoadingMessage() {
+            const loadingMessage = document.getElementById('loadingMessage');
+            if (loadingMessage) {
+                loadingMessage.remove();
+            }
+        }
+
+        function formatMessageContent(content) {
+            // Simple markdown-like formatting
+            return content
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/^## (.*$)/gm, '<h3>$1</h3>')
+                .replace(/^### (.*$)/gm, '<h4>$1</h4>')
+                .replace(/^- (.*$)/gm, '<li>$1</li>')
+                .replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>')
+                .replace(/\n/g, '<br>');
+        }
+
+        function exportConversation() {
+            if (!currentChatSession) return;
+            
+            window.open(`/chat/export/${currentChatSession}`, '_blank');
+        }
+
+        // Allow Enter key to send message
+        document.getElementById('chatInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendChatMessage();
+            }
+        });
     </script>
 </body>
 </html>

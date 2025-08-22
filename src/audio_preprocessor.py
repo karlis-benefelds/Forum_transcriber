@@ -37,12 +37,31 @@ class AudioPreprocessor:
             raise FileNotFoundError(f"File not found: {file_path}")
 
         try:
+            # Use the notebook's more robust approach for MP4 files
             if file_path.lower().endswith('.mp4'):
-                print(f"Converting MP4 → Whisper-optimized WAV...")
+                print(f"Converting MP4 to MP3 (intermediate step)...")
+                mp3_path = file_path.rsplit('.', 1)[0] + '.mp3'
+                result = subprocess.run([
+                    'ffmpeg', '-y', '-v', 'warning', '-xerror',
+                    '-i', file_path, '-vn',
+                    '-acodec', 'libmp3lame', '-ar', '44100', '-ab', '192k', '-f', 'mp3',
+                    mp3_path
+                ], capture_output=True, text=True, check=False)
+
+                if result.returncode == 0 and Path(mp3_path).exists() and Path(mp3_path).stat().st_size > 0:
+                    print(f"Successfully converted to MP3: {mp3_path}")
+                    return AudioPreprocessor._convert_to_whisper_wav(mp3_path)
+                else:
+                    print(f"MP3 conversion failed with error: {result.stderr}")
+                    return AudioPreprocessor._python_extract_audio(file_path)
+                    
+            elif file_path.lower().endswith(('.mp3', '.m4a', '.aac', '.ogg')):
+                print(f"Converting audio file to optimized WAV format...")
                 return AudioPreprocessor._convert_to_whisper_wav(file_path)
-            elif file_path.lower().endswith(('.mp3', '.m4a', '.aac', '.ogg', '.wav')):
-                print(f"Normalizing to Whisper-optimized WAV...")
-                return AudioPreprocessor._convert_to_whisper_wav(file_path)
+                
+            elif file_path.lower().endswith('.wav'):
+                print(f"File is already in WAV format: {file_path}")
+                return file_path
             else:
                 print("Unknown format — attempting Python fallback decode...")
                 return AudioPreprocessor._python_extract_audio(file_path)

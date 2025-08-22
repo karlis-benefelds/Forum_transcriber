@@ -63,19 +63,32 @@ def _fmt_mmss(seconds_float):
     return f"{m:02d}:{s:02d}"
 
 def normalize_sentence_spacing(text: str) -> str:
-    """
-    Fixes missing spaces after sentence punctuation and collapses over-spacing.
-    Handles cases like "taught CS51.So you've" -> "taught CS51. So you've"
-    """
+    """Fix glued sentences & punctuation spacing (respects ellipses), collapse newlines/spaces."""
     if not text:
         return text
-    # Ensure space after . ! ? when followed by letter/quote/number
-    text = re.sub(r'([.!?])(?=[A-Za-z0-9"\'])', r'\1 ', text)
-    # Collapse multiple spaces
+    # remove zero-widths & non-breaking spaces, collapse newlines
+    text = re.sub(r'[\u200B-\u200D\uFEFF]', '', text)
+    text = text.replace('\u00A0', ' ')
+    text = re.sub(r'\s*\n+\s*', ' ', text)
+
+    # keep ellipses intact but add a space after if glued
+    text = re.sub(r'(\.\.\.)(?=\S)', r'\1 ', text)
+
+    # add a space after ., ?, ! when next visible char is a letter or an opening quote/paren
+    # and NOT a decimal number (next char digit)
+    text = re.sub(r'(?<!\.)'              # previous char is not a dot (avoid inside "...")
+                  r'([.!?])'              # sentence end
+                  r'(?=([""\'(\[]?[A-Za-z]))'  # next visible char is letter (maybe after quote/paren)
+                  , r'\1 ', text)
+
+    # optional: add space after : or ; if followed by a letter
+    text = re.sub(r'([:;])(?=([""\'(\[]?[A-Za-z]))', r'\1 ', text)
+
+    # de-glue common quote cases like: ."Word  .'Word  .)Word
+    text = re.sub(r'([.!?][""\')\]])(?=\S)', r'\1 ', text)
+
+    # collapse multiple spaces
     text = re.sub(r'\s{2,}', ' ', text)
-    # Trim space before punctuation
-    text = re.sub(r'\s+([,.!?;:])', r'\1', text)
-    # Make sure quotes then letter also have space before if needed: already covered by first rule most times
     return text.strip()
 
 def soft_break_long_token(s: str, every: int = 14) -> str:

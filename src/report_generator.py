@@ -2,7 +2,9 @@ import json
 import csv
 import datetime
 import re
+import iso8601
 from datetime import timezone
+from pathlib import Path
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer, PageBreak
@@ -90,10 +92,12 @@ def compile_transcript_to_pdf(class_id, headers, privacy_mode="names"):
         speaker_style = ParagraphStyle('SpeakerStyle', parent=styles['Normal'],
                                        fontName='Helvetica', fontSize=10, leading=12, wordWrap='CJK')
 
-        # PDF
+        # PDF - save to outputs directory
         suffix = "names" if privacy_mode == "names" else "ids"
-        output_path = get_temp_path(f"session_{class_id}_transcript_{suffix}.pdf")
-        doc = SimpleDocTemplate(output_path, pagesize=letter, rightMargin=60, leftMargin=60, topMargin=60, bottomMargin=60)
+        outputs_dir = Path("outputs")
+        outputs_dir.mkdir(exist_ok=True)
+        output_path = outputs_dir / f"session_{class_id}_transcript_{suffix}.pdf"
+        doc = SimpleDocTemplate(str(output_path), pagesize=letter, rightMargin=60, leftMargin=60, topMargin=60, bottomMargin=60)
 
         elements = []
 
@@ -380,10 +384,12 @@ def compile_transcript_to_csv(class_id, headers, privacy_mode="names"):
 
         out_rows = segmented_rows or all_items
 
-        # Write CSV
+        # Write CSV - save to outputs directory
         suffix = "names" if privacy_mode == "names" else "ids"
-        output_path = get_temp_path(f"session_{class_id}_transcript_{suffix}.csv")
-        with open(output_path, 'w', newline='', encoding='utf-8') as csvfile:
+        outputs_dir = Path("outputs")
+        outputs_dir.mkdir(exist_ok=True)
+        output_path = outputs_dir / f"session_{class_id}_transcript_{suffix}.csv"
+        with open(str(output_path), 'w', newline='', encoding='utf-8') as csvfile:
             w = csv.writer(csvfile)
 
             # Header block
@@ -447,8 +453,10 @@ def create_simplified_csv(class_id, transcript_path):
         with open(get_temp_path(f"session_{class_id}_transcript.json"), 'r') as f:
             transcript_data = json.load(f)
 
-        output_path = get_temp_path(f"session_{class_id}_transcript_simple.csv")
-        with open(output_path, 'w', newline='', encoding='utf-8') as csvfile:
+        outputs_dir = Path("outputs")
+        outputs_dir.mkdir(exist_ok=True)
+        output_path = outputs_dir / f"session_{class_id}_transcript_simple.csv"
+        with open(str(output_path), 'w', newline='', encoding='utf-8') as csvfile:
             w = csv.writer(csvfile)
             w.writerow(['Time', 'Text'])
             for seg in transcript_data['segments']:
@@ -468,7 +476,9 @@ def create_simplified_transcript(class_id, transcript_path):
     Fallback PDF: no events, no speakers; includes minimal title.
     """
     try:
-        output_path = get_temp_path(f"session_{class_id}_transcript_simple.pdf")
+        outputs_dir = Path("outputs")
+        outputs_dir.mkdir(exist_ok=True)
+        output_path = outputs_dir / f"session_{class_id}_transcript_simple.pdf"
         styles = getSampleStyleSheet()
         text_style = ParagraphStyle('TextStyle', parent=styles['Normal'],
                                     fontName='Helvetica', fontSize=10, leading=12, spaceAfter=0, spaceBefore=0,
@@ -480,7 +490,7 @@ def create_simplified_transcript(class_id, transcript_path):
         with open(get_temp_path(f"session_{class_id}_transcript.json"), 'r') as f:
             transcript_data = json.load(f)
 
-        doc = SimpleDocTemplate(output_path, pagesize=letter,
+        doc = SimpleDocTemplate(str(output_path), pagesize=letter,
                                 rightMargin=72, leftMargin=72, topMargin=72, bottomMargin=72)
         elements = []
         title = Paragraph(f"Session {class_id}", styles['Title'])
